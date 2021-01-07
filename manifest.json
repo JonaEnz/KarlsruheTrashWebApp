@@ -8,11 +8,17 @@
   "start_url": "https://jonaenz.github.io/KarlsruheTrashWebApp/",
   "background_color": "#000000",
   "theme_color": "transparent",
-  "description": "",
+  "description": "Übersicht über Abfalltermine der Stadt Karlsruhe",
   "orientation": "any",
   "related_applications": [],
   "prefer_related_applications": false,
-  "icons": [],
+  "icons": [
+    {
+      "src": "./icons/150x150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    }
+  ],
   "url": "https://jonaenz.github.io/KarlsruheTrashWebApp/",
   "screenshots": []
 }
