@@ -1,7 +1,7 @@
-.left {
-  width: 50%;
-  position: absolute;
-  left: 0px;
+.containerHalf {
+  min-height: 75%;
+  min-width: 40%;
+  width: 600px;
 }
 
 .timeline {
