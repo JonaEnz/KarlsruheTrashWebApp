@@ -122,3 +122,13 @@ body {
   left: 0;
   right: -55.8px;
 }
+
+.day {
+  border: 1px solid;
+  border-color: lightslategray;
+}
+.day:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
