@@ -1,3 +1,5 @@
+import { iconBio, iconPaper, iconPlastic, iconTrash } from "./icons.js";
+
 export default class Calendar {
   constructor(root, month, year) {
     this.root = root;
@@ -36,10 +38,43 @@ export default class Calendar {
     var i = 0;
     elements.forEach((element) => {
       //console.log(element);
-      element.innerHTML = i;
+      element.classList.remove("day-event", "day-empty");
+      var day = this.index_to_date(i);
+      if (day == 0 && day < this.days_in_month(this.month, this.year)) {
+        //TODO: Days in month
+        element.classList.add("day-empty");
+        element.innerHTML = "";
+      } else {
+        var date = new Date(this.year, this.month, day);
+        if (this.eventExists(date)) {
+          var html = "";
+          this.getEvents(date).forEach((e) => {
+            html += e.type;
+          });
+          element.innerHTML = "";
+          var div = document.createElement("div");
+          div.classList.add(
+            "d-flex",
+            "align-items-center",
+            "justify-content-center"
+          );
+          div.style = "width: 100%; height: 100%";
+          div.innerHTML = html + iconTrash;
+          element.appendChild(div);
 
+          var icon = div.querySelector("svg");
+          icon.setAttribute("width", "32px");
+          icon.setAttribute("height", "32px");
+          element.classList.add("day-event");
+        } else {
+          element.innerHTML = day;
+        }
+      }
       i++;
     });
+  }
+  days_in_month(month, year) {
+    return new Date(year, month, 0).getDate();
   }
 
   index_to_date(i) {
@@ -57,7 +92,20 @@ export default class Calendar {
   eventExists(date) {
     var daymilli = 1000 * 60 * 60 * 24;
     return this.events.some((val) => {
-      return date.getTime() % daymilli == val.getTime() % daymilli;
+      return (
+        Math.floor(date.getTime() / daymilli) ==
+        Math.floor(val.date.getTime() / daymilli)
+      );
+    });
+  }
+
+  getEvents(date) {
+    var daymilli = 1000 * 60 * 60 * 24;
+    return this.events.filter((val) => {
+      return (
+        Math.floor(date.getTime() / daymilli) ==
+        Math.floor(val.date.getTime() / daymilli)
+      );
     });
   }
 }

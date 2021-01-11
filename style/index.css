@@ -132,3 +132,11 @@ body {
   display: block;
   padding-bottom: 100%;
 }
+
+.day-event {
+  background-color: #ffbc05d5;
+}
+
+.day-empty {
+  border: 0px;
+}

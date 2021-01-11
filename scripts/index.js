@@ -44,6 +44,7 @@ function tryGetData() {
 }
 
 var cal = new Calendar(document.getElementById("calendar"), 0, 21);
+cal.addEvent(new Date(2021, 0, 14), "+");
 cal.render();
 
 function renderTimeline(byDate) {
@@ -72,6 +73,9 @@ function renderTimeline(byDate) {
         h2.innerHTML = iconTrash + " " + e[0];
         break;
     }
+    var icon = h2.querySelector("svg");
+    icon.setAttribute("width", "20px");
+    icon.setAttribute("height", "20px");
 
     h3.innerHTML =
       e[1].getDate() +
