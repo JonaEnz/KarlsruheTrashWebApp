@@ -40,11 +40,15 @@ function tryGetData() {
     setTimeout(tryGetData, 500);
   } else {
     renderTimeline(tah.getByDate());
+    tah.getByDate().forEach((e) => {
+      cal.addEvent(e[1], e[0]);
+    });
+    cal.render();
   }
 }
 
 var cal = new Calendar(document.getElementById("calendar"), 0, 21);
-cal.addEvent(new Date(2021, 0, 14), "+");
+
 cal.render();
 
 function renderTimeline(byDate) {
@@ -140,3 +144,17 @@ function openContainer(id) {
       break;
   }
 }
+
+function changeMonthBy(n) {
+  cal.month += n;
+  if (cal.month < 0) {
+    cal.month += 12;
+    cal.year -= 1;
+  } else if (cal.month > 11) {
+    cal.month -= 12;
+    cal.year += 1;
+  }
+  cal.render();
+}
+
+window.changeMonthBy = changeMonthBy;

@@ -31,7 +31,7 @@ export default class Calendar {
   }
 
   render() {
-    var headline = this.root.querySelector("h3");
+    var headline = this.root.querySelector("#calHeadline");
     headline.innerHTML = this.monthList[this.month] + " " + this.year;
 
     var elements = this.root.querySelectorAll(".day");
@@ -49,7 +49,7 @@ export default class Calendar {
         if (this.eventExists(date)) {
           var html = "";
           this.getEvents(date).forEach((e) => {
-            html += e.type;
+            //html += e.type;
           });
           element.innerHTML = "";
           var div = document.createElement("div");
@@ -59,12 +59,27 @@ export default class Calendar {
             "justify-content-center"
           );
           div.style = "width: 100%; height: 100%";
-          div.innerHTML = html + iconTrash;
+          switch (this.getEvents(date)[0].type) {
+            case "Papier":
+              html += iconPaper;
+              break;
+            case "Bioabfall":
+              html += iconBio;
+              break;
+            case "Wertstoff":
+              html += iconPlastic;
+              break;
+            default:
+              html += iconTrash;
+              break;
+          }
+          div.innerHTML = html;
           element.appendChild(div);
 
           var icon = div.querySelector("svg");
           icon.setAttribute("width", "32px");
           icon.setAttribute("height", "32px");
+
           element.classList.add("day-event");
         } else {
           element.innerHTML = day;

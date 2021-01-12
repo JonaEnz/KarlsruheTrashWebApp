@@ -136,6 +136,10 @@ body {
 .day-event {
   background-color: #ffbc05d5;
 }
+.day-event :after {
+  display: inline;
+  padding-bottom: 0%;
+}
 
 .day-empty {
   border: 0px;
