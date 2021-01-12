@@ -105,23 +105,23 @@ export default class Calendar {
   }
 
   eventExists(date) {
-    var daymilli = 1000 * 60 * 60 * 24;
     return this.events.some((val) => {
-      return (
-        Math.floor(date.getTime() / daymilli) ==
-        Math.floor(val.date.getTime() / daymilli)
-      );
+      return this.sameDay(date, val.date);
     });
   }
 
   getEvents(date) {
-    var daymilli = 1000 * 60 * 60 * 24;
     return this.events.filter((val) => {
-      return (
-        Math.floor(date.getTime() / daymilli) ==
-        Math.floor(val.date.getTime() / daymilli)
-      );
+      return this.sameDay(date, val.date);
     });
+  }
+
+  sameDay(d1, d2) {
+    return (
+      d1.getFullYear() == d2.getFullYear() &&
+      d1.getMonth() == d2.getMonth() &&
+      d1.getDate() == d2.getDate()
+    );
   }
 }
 

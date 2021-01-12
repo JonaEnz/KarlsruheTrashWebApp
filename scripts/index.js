@@ -41,7 +41,9 @@ function tryGetData() {
   } else {
     renderTimeline(tah.getByDate());
     tah.getByDate().forEach((e) => {
-      cal.addEvent(e[1], e[0]);
+      e[1].forEach((type) => {
+        cal.addEvent(e[0], type);
+      });
     });
     cal.render();
   }
@@ -55,48 +57,55 @@ function renderTimeline(byDate) {
   while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
+
+  var tl = document.createElement("ul");
+  tl.classList = ["timeline"];
+
   byDate.forEach((e) => {
-    var tl = document.createElement("ul");
-    tl.classList = ["timeline"];
     var event = document.createElement("li");
     event.className = ["event"];
-    var h2 = document.createElement("h3");
-    var h3 = document.createElement("h4");
+    var date = document.createElement("h4");
 
-    switch (e[0]) {
-      case "Papier":
-        h2.innerHTML = iconPaper + " " + e[0];
-        break;
-      case "Bioabfall":
-        h2.innerHTML = iconBio + " " + e[0];
-        break;
-      case "Wertstoff":
-        h2.innerHTML = iconPlastic + " " + e[0];
-        break;
-      default:
-        h2.innerHTML = iconTrash + " " + e[0];
-        break;
-    }
-    var icon = h2.querySelector("svg");
-    icon.setAttribute("width", "20px");
-    icon.setAttribute("height", "20px");
+    e[1].forEach((type) => {
+      var h2 = document.createElement("h3");
 
-    h3.innerHTML =
-      e[1].getDate() +
+      switch (type) {
+        case "Papier":
+          h2.innerHTML = iconPaper + " " + type;
+          break;
+        case "Bioabfall":
+          h2.innerHTML = iconBio + " " + type;
+          break;
+        case "Wertstoff":
+          h2.innerHTML = iconPlastic + " " + type;
+          break;
+        default:
+          h2.innerHTML = iconTrash + " " + type;
+          break;
+      }
+      var icon = h2.querySelector("svg");
+      icon.setAttribute("width", "20px");
+      icon.setAttribute("height", "20px");
+      event.appendChild(h2);
+    });
+
+    var dateContent = document.createElement("span");
+    dateContent.classList.add("badge", "bg-secondary");
+    dateContent.innerHTML =
+      e[0].getDate() +
       "." +
-      (e[1].getMonth() + 1) +
+      (e[0].getMonth() + 1) +
       "." +
-      (e[1].getYear() - 100);
+      (e[0].getYear() - 100);
 
-    h3.onclick = function (e) {
+    date.onclick = function (e) {
       openContainer(2);
     };
-
-    event.appendChild(h2);
-    event.appendChild(h3);
+    date.appendChild(dateContent);
+    event.insertBefore(date, event.querySelector("h3"));
     tl.appendChild(event);
-    content.appendChild(tl);
   });
+  content.appendChild(tl);
 }
 
 function openContainer(id) {

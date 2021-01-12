@@ -41,9 +41,20 @@ export default class TrashApiHelper {
         result.push([e.name, this.date_from_string(date)]);
       });
     });
-    return result.sort((a, b) => {
+    result = result.sort((a, b) => {
       return a[1] - b[1];
     });
+    var res = [[result[0][1], [result[0][0]]]];
+    result.reduce((prev, curr, index) => {
+      if (index != 0 && prev[1].getTime() == curr[1].getTime()) {
+        res[res.length - 1][1].push(curr[0]);
+      } else {
+        res.push([curr[1], [curr[0]]]);
+      }
+      return curr;
+    });
+
+    return res;
   }
 
   getByType() {
