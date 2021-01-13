@@ -38,7 +38,7 @@ export default class Calendar {
     var i = 0;
     elements.forEach((element) => {
       //console.log(element);
-      element.classList.remove("day-event", "day-empty");
+      element.classList.remove("day-event", "day-empty", "day-today");
       var day = this.index_to_date(i);
       if (day == 0 || day > this.days_in_month(this.month, this.year)) {
         //TODO: Days in month
@@ -46,11 +46,12 @@ export default class Calendar {
         element.innerHTML = "";
       } else {
         var date = new Date(this.year, this.month, day);
+        if (this.sameDay(date, new Date())) {
+          //today
+          element.classList.add("day-today");
+        }
         if (this.eventExists(date)) {
           var html = "";
-          this.getEvents(date).forEach((e) => {
-            //html += e.type;
-          });
           element.innerHTML = "";
           var div = document.createElement("div");
           div.classList.add(
@@ -59,26 +60,31 @@ export default class Calendar {
             "justify-content-center"
           );
           div.style = "width: 100%; height: 100%";
-          switch (this.getEvents(date)[0].type) {
-            case "Papier":
-              html += iconPaper;
-              break;
-            case "Bioabfall":
-              html += iconBio;
-              break;
-            case "Wertstoff":
-              html += iconPlastic;
-              break;
-            default:
-              html += iconTrash;
-              break;
-          }
+          this.getEvents(date).forEach((e) => {
+            switch (e.type) {
+              case "Papier":
+                html += iconPaper;
+                break;
+              case "Bioabfall":
+                html += iconBio;
+                break;
+              case "Wertstoff":
+                html += iconPlastic;
+                break;
+              default:
+                html += iconTrash;
+                break;
+            }
+          });
+
           div.innerHTML = html;
           element.appendChild(div);
 
-          var icon = div.querySelector("svg");
-          icon.setAttribute("width", "32px");
-          icon.setAttribute("height", "32px");
+          var icons = div.querySelectorAll("svg");
+          icons.forEach((icon) => {
+            icon.setAttribute("width", "30px");
+            icon.setAttribute("height", "30px");
+          });
 
           element.classList.add("day-event");
         } else {
@@ -87,6 +93,7 @@ export default class Calendar {
           element.style = "font-size: 20px";
         }
       }
+
       i++;
     });
   }
@@ -120,9 +127,9 @@ export default class Calendar {
 
   sameDay(d1, d2) {
     return (
-      d1.getFullYear() == d2.getFullYear() &&
-      d1.getMonth() == d2.getMonth() &&
-      d1.getDate() == d2.getDate()
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
     );
   }
 }

@@ -144,3 +144,7 @@ body {
 .day-empty {
   border: 0px;
 }
+
+.day-today {
+  background-color: #baf608;
+}
