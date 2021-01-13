@@ -66,7 +66,7 @@ export default class TrashApiHelper {
   }
 
   date_from_string(str) {
-    return new Date(str.replace(/(\d{2}).(\d{2}).(\d{2})/, "20$3-$2-$1"));
+    return new Date(str.replace(/(\d{1,2}).(\d{1,2}).(\d{2})/, "20$3-$2-$1"));
   }
 
   setLocation(lat, lng) {

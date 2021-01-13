@@ -40,7 +40,7 @@ export default class Calendar {
       //console.log(element);
       element.classList.remove("day-event", "day-empty");
       var day = this.index_to_date(i);
-      if (day == 0 && day < this.days_in_month(this.month, this.year)) {
+      if (day == 0 || day > this.days_in_month(this.month, this.year)) {
         //TODO: Days in month
         element.classList.add("day-empty");
         element.innerHTML = "";
@@ -82,14 +82,16 @@ export default class Calendar {
 
           element.classList.add("day-event");
         } else {
+          //No event, show day
           element.innerHTML = day;
+          element.style = "font-size: 20px";
         }
       }
       i++;
     });
   }
   days_in_month(month, year) {
-    return new Date(year, month, 0).getDate();
+    return new Date(year, month + 1, 0).getDate();
   }
 
   index_to_date(i) {

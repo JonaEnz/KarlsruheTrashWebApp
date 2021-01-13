@@ -99,6 +99,10 @@ function renderTimeline(byDate) {
       (e[0].getYear() - 100);
 
     date.onclick = function (e) {
+      var date = tah.date_from_string(e.target.innerHTML);
+      cal.month = date.getMonth();
+      cal.year = date.getFullYear();
+      cal.render();
       openContainer(2);
     };
     date.appendChild(dateContent);
@@ -152,6 +156,8 @@ function openContainer(id) {
       contC.classList.add("order-2");
       break;
   }
+
+  window.scroll(0, 0);
 }
 
 function changeMonthBy(n) {
