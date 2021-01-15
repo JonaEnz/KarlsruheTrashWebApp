@@ -3,6 +3,8 @@ import { iconTrash, iconPaper, iconBio, iconPlastic } from "./icons.js";
 import Calendar from "./calendar.js";
 import StorageManager from "./storagemanager.js";
 
+var navheadline = document.getElementById("navHeadline");
+
 var content = document.getElementById("content");
 var trashIcon = document.getElementById("trashIcon");
 /**
@@ -37,6 +39,8 @@ if (!sm.idExists("street") || !sm.idExists("nr")) {
 
 var street = sm.getById("street");
 var nr = sm.getById("nr");
+
+navheadline.innerHTML = street + " " + nr;
 
 var tah = new TrashApiHelper(
   street,

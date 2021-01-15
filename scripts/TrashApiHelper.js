@@ -4,23 +4,34 @@ export default class TrashApiHelper {
     this.nr = nr;
     this.urlFormat = urlFormat;
     this.data = [];
+    this.success = -1;
     this.update();
   }
 
-  async update() {
+  update() {
+    this.success = -1;
     var url = this.urlFormat
       .replace("{nr}", this.nr)
       .replace("{street}", this.street);
-    try {
-      var response = await fetch(url, { method: "GET" });
-      var json = await response.json();
-      if (json.CollectionDates) {
-        this.data = json.CollectionDates;
-      }
-      console.log(this.data);
-    } catch (e) {
-      console.error(e.toString());
-    }
+    fetch(url, { method: "GET" })
+      .then((response) => {
+        if (!response.ok) {
+          this.success = 0;
+          return;
+        }
+        response.json().then((json) => {
+          if (json.CollectionDates) {
+            this.data = json.CollectionDates;
+            this.success = 1;
+          }
+        });
+      })
+      .catch((e) => {
+        console.error(e.toString());
+        this.success = 0;
+      });
+
+    //console.log(this.data);
   }
 
   setUrl(url) {
