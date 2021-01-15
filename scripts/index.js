@@ -1,6 +1,7 @@
 import TrashApiHelper from "./TrashApiHelper.js";
 import { iconTrash, iconPaper, iconBio, iconPlastic } from "./icons.js";
 import Calendar from "./calendar.js";
+import StorageManager from "./storagemanager.js";
 
 var content = document.getElementById("content");
 var trashIcon = document.getElementById("trashIcon");
@@ -28,9 +29,18 @@ var flex = document.getElementById("flexDiv");
 var firstCont = 1;
 var sndCont = 2;
 
+var sm = new StorageManager();
+
+if (!sm.idExists("street") || !sm.idExists("nr")) {
+  window.location.href = "/setup";
+}
+
+var street = sm.getById("street");
+var nr = sm.getById("nr");
+
 var tah = new TrashApiHelper(
-  "Lebrechtstraße",
-  52,
+  street,
+  nr,
   "https://karlsruhe-trash.azurewebsites.net/api/HttpTrigger?street={street}&nr={nr}"
 );
 tryGetData();

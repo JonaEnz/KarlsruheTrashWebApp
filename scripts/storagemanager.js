@@ -13,4 +13,12 @@ export default class StorageManager {
       throw new Error("Item with id -" + id + "- doesn't exist");
     }
   }
+
+  idExists(id) {
+    if (localStorage.getItem(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
