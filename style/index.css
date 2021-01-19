@@ -1,7 +1,8 @@
 .containerHalf {
   min-height: 75%;
   min-width: 40%;
-  width: 600px;
+  margin-left: 5% !important;
+  width: 800px;
 }
 
 .timeline {

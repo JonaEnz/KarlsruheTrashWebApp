@@ -33,7 +33,8 @@ function waitForData() {
 }
 
 btnSave.onclick = function (e) {
-  //TODO: Validate Data (tah?)
+  street.value = street.value.replace("str.", "straße").replace("wg.", "weg");
+
   tah = new TrashApiHelper(
     street.value,
     nr.value,
