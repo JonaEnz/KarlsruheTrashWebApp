@@ -28,7 +28,7 @@ function waitForData() {
       sm.save("street", street.value);
       sm.save("nr", nr.value);
 
-      window.location.href = "/";
+      window.location.href = "/KarlsruheTrashWebApp/";
   }
 }
 

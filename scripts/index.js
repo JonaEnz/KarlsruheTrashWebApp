@@ -37,7 +37,7 @@ var sndCont = 2;
 var sm = new StorageManager();
 
 if (!sm.idExists("street") || !sm.idExists("nr")) {
-  window.location.href = "/setup";
+  window.location.href = "/KarlsruheTrashWebApp/setup";
 }
 
 var street = sm.getById("street");
