@@ -2,8 +2,11 @@ import TrashApiHelper from "./TrashApiHelper.js";
 import { iconTrash, iconPaper, iconBio, iconPlastic } from "./icons.js";
 import Calendar from "./calendar.js";
 import StorageManager from "./storagemanager.js";
+import ListVote from "./listvote.js";
 
 var navheadline = document.getElementById("navHeadline");
+
+var warning = document.getElementById("alert");
 
 var content = document.getElementById("content");
 var trashIcon = document.getElementById("trashIcon");
@@ -60,12 +63,75 @@ function tryGetData() {
       });
     });
     cal.render();
+
+    renderWarning(tah.getByType());
   }
 }
 
 var cal = new Calendar(document.getElementById("calendar"), 0, 21);
 
 cal.render();
+
+var vote = new ListVote();
+
+function renderWarning(byType) {
+  var dayInMs = 24 * 60 * 60 * 1000;
+
+  warning.innerHTML = "";
+
+  byType.forEach((val) => {
+    var spacing = val[1].map((v, index, array) => {
+      if (index == 0) {
+        return 0;
+      } else {
+        return Math.floor((v.getTime() - array[index - 1].getTime()) / dayInMs);
+      }
+    });
+    spacing.splice(0, 1);
+
+    var winner = vote.getWinner(spacing);
+
+    var nonWinner = spacing.map((v) => {
+      return v != winner;
+    });
+
+    var isChanged = spacing.map((v, i, a) => {
+      return nonWinner[i] && (i == a.length - 1 || !nonWinner[i + 1]);
+    });
+
+    var isSpecial = spacing.map((v, i, a) => {
+      return nonWinner[i] && i != a.length - 1 && nonWinner[i + 1];
+    });
+
+    function addToWarning(text, info) {
+      var a = document.createElement("p");
+      a.innerHTML = text + ": " + info;
+      warning.appendChild(a);
+    }
+
+    spacing.forEach((v, i) => {
+      if (isChanged[i]) {
+        addToWarning(
+          "Leerung ändert Plan",
+          val[0] + " " + val[1][i + 1].toLocaleDateString()
+        );
+      } else if (isSpecial[i]) {
+        addToWarning(
+          "Folgende Leerung ist außerplanmäßig",
+          val[0] + " " + val[1][i + 1].toLocaleDateString()
+        );
+      } else {
+        //addToWarning("Test", val[0] + " " + val[1][i + 1].toLocaleDateString());
+      }
+    });
+  });
+
+  if (warning.innerHTML.length > 0) {
+    warning.removeAttribute("hidden");
+  } else {
+    warning.setAttribute("hidden", "");
+  }
+}
 
 function renderTimeline(byDate) {
   while (content.firstChild) {
@@ -104,7 +170,7 @@ function renderTimeline(byDate) {
     });
 
     var dateContent = document.createElement("span");
-    dateContent.classList.add("badge", "bg-secondary");
+    dateContent.classList.add("badge", "bg-secondary", "timeline-badge");
     dateContent.innerHTML =
       e[0].getDate() +
       "." +

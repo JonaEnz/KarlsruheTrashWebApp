@@ -55,7 +55,7 @@ export default class TrashApiHelper {
     result = result.sort((a, b) => {
       return a[1] - b[1];
     });
-    var res = [[result[0][1], [result[0][0]]]];
+    var res = [[result[0][1], [result[0][0]]]]; //Format: [Date, [Types]]
     result.reduce((prev, curr, index) => {
       if (index != 0 && prev[1].getTime() == curr[1].getTime()) {
         res[res.length - 1][1].push(curr[0]);
@@ -71,7 +71,10 @@ export default class TrashApiHelper {
   getByType() {
     var results = [];
     this.data.forEach((e) => {
-      results.push([e.name, e.dates]);
+      var dates = e.dates.map((v) => {
+        return this.date_from_string(v);
+      });
+      results.push([e.name, dates]); //Format: [Type, [Date]]
     });
     return results;
   }

@@ -149,3 +149,7 @@ body {
 .day-today {
   background-color: #baf608;
 }
+
+.timeline-badge:hover {
+  background-color: blue !important;
+}
