@@ -33,7 +33,10 @@ function waitForData() {
 }
 
 btnSave.onclick = function (e) {
-  street.value = street.value.replace("str.", "straße").replace("wg.", "weg");
+  street.value = street.value
+    .replace("str.", "straße")
+    .replace("wg.", "weg")
+    .trim();
 
   tah = new TrashApiHelper(
     street.value,

@@ -146,10 +146,18 @@ body {
   border: 0px;
 }
 
+.day-marked {
+  background-color: #0548ff;
+}
+
 .day-today {
   background-color: #baf608;
 }
 
 .timeline-badge:hover {
-  background-color: blue !important;
+  background-color: #0548ff !important;
+}
+
+.timeline-badge-clicked {
+  background-color: #0548ff !important;
 }

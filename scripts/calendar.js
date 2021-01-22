@@ -6,6 +6,8 @@ export default class Calendar {
     this.events = [];
     this.month = month;
     this.year = year;
+    this.mark = null;
+
     if (year < 2000) {
       this.year = 2000 + (year % 100);
     }
@@ -38,7 +40,12 @@ export default class Calendar {
     var i = 0;
     elements.forEach((element) => {
       //console.log(element);
-      element.classList.remove("day-event", "day-empty", "day-today");
+      element.classList.remove(
+        "day-event",
+        "day-empty",
+        "day-today",
+        "day-marked"
+      );
       var day = this.index_to_date(i);
       if (day == 0 || day > this.days_in_month(this.month, this.year)) {
         //TODO: Days in month
@@ -50,6 +57,11 @@ export default class Calendar {
           //today
           element.classList.add("day-today");
         }
+
+        if (this.sameDay(date, this.mark)) {
+          element.classList.add("day-marked");
+        }
+
         if (this.eventExists(date)) {
           var html = "";
           element.innerHTML = "";
@@ -131,6 +143,10 @@ export default class Calendar {
       d1.getMonth() === d2.getMonth() &&
       d1.getDate() === d2.getDate()
     );
+  }
+
+  markDay(date) {
+    this.mark = date;
   }
 }
 
