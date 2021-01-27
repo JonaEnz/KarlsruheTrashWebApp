@@ -259,3 +259,11 @@ function changeMonthBy(n) {
 }
 
 window.changeMonthBy = changeMonthBy;
+
+document.getElementById("btnPrev").onclick = (e) => {
+  changeMonthBy(-1);
+};
+
+document.getElementById("btnNext").onclick = (e) => {
+  changeMonthBy(1);
+};

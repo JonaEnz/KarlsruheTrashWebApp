@@ -58,7 +58,7 @@ export default class Calendar {
           element.classList.add("day-today");
         }
 
-        if (this.sameDay(date, this.mark)) {
+        if (this.mark && this.sameDay(date, this.mark)) {
           element.classList.add("day-marked");
         }
 
