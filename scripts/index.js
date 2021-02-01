@@ -67,8 +67,12 @@ function tryGetData() {
     renderWarning(tah.getByType());
   }
 }
-
-var cal = new Calendar(document.getElementById("calendar"), 0, 21);
+var today = new Date();
+var cal = new Calendar(
+  document.getElementById("calendar"),
+  today.getMonth(),
+  today.getFullYear()
+);
 
 cal.render();
 
