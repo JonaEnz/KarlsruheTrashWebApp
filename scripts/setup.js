@@ -9,6 +9,13 @@ var street = document.getElementById("street");
 var nr = document.getElementById("nr");
 var ae = document.getElementById("adressError");
 
+if (sm.idExists("street")) {
+  street.value = sm.getById("street");
+}
+if (sm.idExists("nr")) {
+  nr.value = sm.getById("nr");
+}
+
 function waitForData() {
   if (!tah) {
     return;
