@@ -6,7 +6,6 @@
   "scope": "/KarlsruheTrashWebApp/",
   "display": "standalone",
   "start_url": "https://jonaenz.github.io/KarlsruheTrashWebApp/",
-  //"start_url": "http://127.0.0.1:8080/KarlsruheTrashWebApp/",
   "background_color": "#000000",
   "theme_color": "transparent",
   "description": "Übersicht über Abfalltermine der Stadt Karlsruhe",
