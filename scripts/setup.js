@@ -73,11 +73,12 @@ btnPos.onclick = function (e) {
             .replace("{lat}", result.coords.latitude)
             .replace("{lon}", result.coords.longitude)
         ).then((resp) => {
-          var json = resp.json();
-          if (json.address.road && json.address.house_nr) {
-            street.value = json.address.road;
-            nr.value = json.address.house_nr;
-          }
+          var json = resp.json().then((res) => {
+            if (res.address.road && res.address.house_nr) {
+              street.value = res.address.road;
+              nr.value = res.address.house_nr;
+            }
+          });
         });
       } catch (error) {
         console.log(error);
