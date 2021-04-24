@@ -8,6 +8,7 @@ var btnSave = document.getElementById("btnSave");
 var street = document.getElementById("street");
 var nr = document.getElementById("nr");
 var ae = document.getElementById("adressError");
+var accErr = document.getElementById("accuracyError");
 
 var btnPos = document.getElementById("btnPos");
 
@@ -31,7 +32,7 @@ function waitForData() {
       //failure, show warning on input
       street.removeAttribute("disabled");
       nr.removeAttribute("disabled");
-      ae.style.setProperty("visibility", "visible");
+      ae.style.setProperty("display", "block");
       return;
     case 1:
       sm.save("street", street.value);
@@ -55,7 +56,7 @@ btnSave.onclick = function (e) {
 
   street.setAttribute("disabled", true);
   nr.setAttribute("disabled", true);
-  ae.style.setProperty("visibility", "hidden");
+  ae.style.setProperty("display", "none");
 
   waitForData();
 };
@@ -65,8 +66,13 @@ if (!("geolocation" in navigator)) {
 }
 
 btnPos.onclick = function (e) {
+  accErr.style.setProperty("display", "none");
   navigator.geolocation.getCurrentPosition(
     (result) => {
+      if (result.coords.accuracy > 20) {
+        accErr.style.setProperty("display", "block");
+        return;
+      }
       try {
         fetch(
           "https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
@@ -74,9 +80,9 @@ btnPos.onclick = function (e) {
             .replace("{lon}", result.coords.longitude)
         ).then((resp) => {
           var json = resp.json().then((res) => {
-            if (res.address.road && res.address.house_nr) {
+            if (res.address.road && res.address.house_number) {
               street.value = res.address.road;
-              nr.value = res.address.house_nr;
+              nr.value = res.address.house_number;
             }
           });
         });
@@ -86,6 +92,7 @@ btnPos.onclick = function (e) {
     },
     (error) => {
       btnPos.setAttribute("disabled");
-    }
+    },
+    { enableHighAccuracy: true }
   );
 };
