@@ -17,6 +17,11 @@ workbox.routing.registerRoute(
   ({ url }) => url.hostname.startsWith("karlsruhe-trash.azurewebsites.net"),
   new workbox.strategies.NetworkFirst({
     cacheName: API_CACHE,
+    plugins: [
+      new workbox.expiration.ExpirationPlugin({
+        maxEntries: 1,
+      }),
+    ],
   })
 );
 
