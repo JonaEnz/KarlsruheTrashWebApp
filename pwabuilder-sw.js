@@ -19,7 +19,7 @@ workbox.routing.registerRoute(
     cacheName: API_CACHE,
     plugins: [
       new workbox.expiration.ExpirationPlugin({
-        maxEntries: 1,
+        maxEntries: 5,
       }),
     ],
   })
