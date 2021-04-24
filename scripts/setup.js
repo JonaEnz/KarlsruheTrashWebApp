@@ -69,8 +69,9 @@ btnPos.onclick = function (e) {
   accErr.style.setProperty("display", "none");
   navigator.geolocation.getCurrentPosition(
     (result) => {
-      if (result.coords.accuracy > 20) {
+      if (result.coords.accuracy > 100) {
         accErr.style.setProperty("display", "block");
+        accErr.innerHTML = result.coords.accuracy;
         return;
       }
       try {
