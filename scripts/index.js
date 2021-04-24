@@ -100,10 +100,12 @@ function renderWarning(byType) {
     });
 
     var isChanged = spacing.map((v, i, a) => {
+      // Leerung geändert, Plan nicht erkennbar
       return nonWinner[i] && (i == a.length - 1 || !nonWinner[i + 1]);
     });
 
     var isSpecial = spacing.map((v, i, a) => {
+      // Leerung einmalig außerplanmäßig
       return nonWinner[i] && i != a.length - 1 && nonWinner[i + 1];
     });
 
@@ -116,7 +118,7 @@ function renderWarning(byType) {
     spacing.forEach((v, i) => {
       if (isChanged[i]) {
         addToWarning(
-          "Leerung ändert Plan",
+          "Leerung nicht regelmäßig",
           val[0] + " " + val[1][i + 1].toLocaleDateString()
         );
       } else if (isSpecial[i]) {
@@ -203,7 +205,7 @@ function renderTimeline(byDate) {
 }
 
 function openContainer(id) {
-  if (id == firstCont) {
+  if (id == firstCont || !isMobileFormat()) {
     return;
   } else {
     sndCont = firstCont;
@@ -260,6 +262,10 @@ function changeMonthBy(n) {
     cal.year += 1;
   }
   cal.render();
+}
+
+function isMobileFormat() {
+  return Math.abs(contA.offsetTop - contB.offsetTop) > 10;
 }
 
 window.changeMonthBy = changeMonthBy;

@@ -147,17 +147,21 @@ body {
 }
 
 .day-marked {
-  background-color: #0548ff;
+  background-color: #0567fa;
 }
 
 .day-today {
   background-color: #baf608;
 }
 
+.day-past {
+  background-color: #999999;
+}
+
 .timeline-badge:hover {
-  background-color: #0548ff !important;
+  background-color: #0567fa !important;
 }
 
 .timeline-badge-clicked {
-  background-color: #0548ff !important;
+  background-color: #0567fa !important;
 }

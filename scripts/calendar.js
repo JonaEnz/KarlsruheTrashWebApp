@@ -44,7 +44,8 @@ export default class Calendar {
         "day-event",
         "day-empty",
         "day-today",
-        "day-marked"
+        "day-marked",
+        "day-past"
       );
       var day = this.index_to_date(i);
       if (day == 0 || day > this.days_in_month(this.month, this.year)) {
@@ -56,6 +57,10 @@ export default class Calendar {
         if (this.sameDay(date, new Date())) {
           //today
           element.classList.add("day-today");
+        }
+
+        if (date.getTime() < Date.now()) {
+          element.classList.add("day-past");
         }
 
         if (this.mark && this.sameDay(date, this.mark)) {
