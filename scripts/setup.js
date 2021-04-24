@@ -71,7 +71,6 @@ btnPos.onclick = function (e) {
     (result) => {
       if (result.coords.accuracy > 100) {
         accErr.style.setProperty("display", "block");
-        accErr.innerHTML = result.coords.accuracy;
         return;
       }
       try {
