@@ -9,6 +9,8 @@ var street = document.getElementById("street");
 var nr = document.getElementById("nr");
 var ae = document.getElementById("adressError");
 
+var btnPos = document.getElementById("btnPos");
+
 if (sm.idExists("street")) {
   street.value = sm.getById("street");
 }
@@ -56,4 +58,33 @@ btnSave.onclick = function (e) {
   ae.style.setProperty("visibility", "hidden");
 
   waitForData();
+};
+
+if (!("geolocation" in navigator)) {
+  btnPos.setAttribute("disabled");
+}
+
+btnPos.onclick = function (e) {
+  navigator.geolocation.getCurrentPosition(
+    (result) => {
+      try {
+        fetch(
+          "https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
+            .replace("{lat}", result.coords.latitude)
+            .replace("{lon}", result.coords.longitude)
+        ).then((resp) => {
+          var json = resp.json();
+          if (json.address.road && json.address.house_nr) {
+            street.value = json.address.road;
+            nr.value = json.address.house_nr;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    (error) => {
+      btnPos.setAttribute("disabled");
+    }
+  );
 };
