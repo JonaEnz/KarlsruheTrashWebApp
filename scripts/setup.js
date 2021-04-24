@@ -84,11 +84,15 @@ btnPos.onclick = function (e) {
             if (res.address.road && res.address.house_number) {
               street.value = res.address.road;
               nr.value = res.address.house_number;
+              accErr.classList.remove("btn-warning", "btn-danger");
+              accErr.classList.add("btn-success");
             }
           });
         });
       } catch (error) {
         console.log(error);
+        accErr.classList.remove("btn-warning", "btn-success");
+        accErr.classList.add("btn-danger");
       }
     },
     (error) => {
