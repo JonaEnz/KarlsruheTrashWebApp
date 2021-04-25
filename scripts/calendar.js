@@ -107,7 +107,7 @@ export default class Calendar {
         } else {
           //No event, show day
           element.innerHTML = day;
-          element.style = "font-size: 20px";
+          //element.style = "font-size: 20px";
         }
       }
 

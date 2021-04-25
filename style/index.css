@@ -124,9 +124,14 @@ body {
   right: -55.8px;
 }
 
+.timeline-badge {
+  font-size: 20px;
+}
+
 .day {
   border: 1px solid;
   border-color: lightslategray;
+  font-size: 27px;
 }
 .day:after {
   content: "";
@@ -164,4 +169,8 @@ body {
 
 .timeline-badge-clicked {
   background-color: #0567fa !important;
+}
+
+.wod {
+  font-size: 20px;
 }
