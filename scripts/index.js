@@ -112,7 +112,7 @@ function renderWarning(byType) {
       if (isChanged[i]) {
         addToWarning(
           "Leerung nicht regelmäßig",
-          val[0] + " " + val[1][i + 1].toLocaleDateString()
+          val[0] + " " + val[1][i].toLocaleDateString()
         );
       } else if (isSpecial[i]) {
         addToWarning(

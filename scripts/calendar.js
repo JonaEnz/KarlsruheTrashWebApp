@@ -57,9 +57,8 @@ export default class Calendar {
         if (this.sameDay(date, new Date())) {
           //today
           element.classList.add("day-today");
-        }
-
-        if (date.getTime() < Date.now()) {
+        } else if (date.getTime() < Date.now()) {
+          //Past day
           element.classList.add("day-past");
         }
 
