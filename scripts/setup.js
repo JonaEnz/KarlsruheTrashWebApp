@@ -12,6 +12,8 @@ var accErr = document.getElementById("accuracyError");
 
 var btnPos = document.getElementById("btnPos");
 
+const ACCURACY_MIN = 100;
+
 if (sm.idExists("street")) {
   street.value = sm.getById("street");
 }
@@ -42,7 +44,7 @@ function waitForData() {
   }
 }
 
-btnSave.onclick = function (e) {
+btnSave.onclick = function () {
   street.value = street.value
     .replace("str.", "straße")
     .replace("wg.", "weg")
@@ -69,7 +71,7 @@ btnPos.onclick = function (e) {
   accErr.style.setProperty("display", "none");
   navigator.geolocation.getCurrentPosition(
     (result) => {
-      if (result.coords.accuracy > 100) {
+      if (result.coords.accuracy > ACCURACY_MIN) {
         accErr.style.setProperty("display", "block");
         return;
       }
@@ -79,7 +81,7 @@ btnPos.onclick = function (e) {
             .replace("{lat}", result.coords.latitude)
             .replace("{lon}", result.coords.longitude)
         ).then((resp) => {
-          var json = resp.json().then((res) => {
+          resp.json().then((res) => {
             if (res.address.road && res.address.house_number) {
               street.value = res.address.road;
               nr.value = res.address.house_number;
@@ -95,6 +97,7 @@ btnPos.onclick = function (e) {
       }
     },
     (error) => {
+      console.log(error);
       btnPos.setAttribute("disabled");
     },
     { enableHighAccuracy: true }
