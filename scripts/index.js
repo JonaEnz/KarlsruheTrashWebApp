@@ -183,21 +183,7 @@ function renderTimeline(byDate) {
       (e[0].getMonth() + 1) +
       "." +
       (e[0].getYear() - 100);
-    /*
-    date.onclick = function (e) {
-      document.querySelectorAll(".timeline-badge-clicked").forEach((s) => {
-        s.classList.remove("timeline-badge-clicked");
-      });
 
-      var date = tah.date_from_string(e.target.innerHTML);
-      e.target.classList.add("timeline-badge-clicked");
-      cal.month = date.getMonth();
-      cal.year = date.getFullYear();
-      cal.markDay(date);
-      cal.render();
-      openContainer(2);
-    };
-*/
     event.onclick = function (e) {
       document.querySelectorAll(".timeline-badge-clicked").forEach((s) => {
         s.classList.remove("timeline-badge-clicked");
