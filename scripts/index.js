@@ -29,19 +29,21 @@ var sndCont = 2;
 
 var sm = new StorageManager();
 
-if (!sm.idExists("street") || !sm.idExists("nr")) {
+if (!sm.idExists("street") || !sm.idExists("nr") || !sm.idExists("apiPath")) {
   window.location.href = "/KarlsruheTrashWebApp/setup";
 }
 
 var street = sm.getById("street");
 var nr = sm.getById("nr");
+var apiPath = sm.getById("apiPath");
 
 navheadline.innerHTML = street + " " + nr;
 
 var tah = new TrashApiHelper(
   street,
   nr,
-  "https://karlsruhe-trash.azurewebsites.net/api/HttpTrigger?street={street}&nr={nr}"
+//  "https://karlsruhe-trash.azurewebsites.net/api/HttpTrigger?street={street}&nr={nr}"
+`http://${apiPath}?street={street}&nr={nr}`
 );
 tryGetData();
 

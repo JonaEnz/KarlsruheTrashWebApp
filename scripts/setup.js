@@ -7,6 +7,7 @@ var tah = null;
 var btnSave = document.getElementById("btnSave");
 var street = document.getElementById("street");
 var nr = document.getElementById("nr");
+var api = document.getElementById("api");
 var ae = document.getElementById("adressError");
 var accErr = document.getElementById("accuracyError");
 
@@ -19,6 +20,9 @@ if (sm.idExists("street")) {
 }
 if (sm.idExists("nr")) {
   nr.value = sm.getById("nr");
+}
+if (sm.idExists("apiPath")) {
+  api.value = sm.getById("apiPath");
 }
 
 function waitForData() {
@@ -34,11 +38,13 @@ function waitForData() {
       //failure, show warning on input
       street.removeAttribute("disabled");
       nr.removeAttribute("disabled");
+      api.removeAttribute("disabled");
       ae.style.setProperty("display", "block");
       return;
     case 1:
       sm.save("street", street.value);
       sm.save("nr", nr.value);
+      sm.save("apiPath", api.value)
 
       window.location.href = "/KarlsruheTrashWebApp/";
   }
@@ -53,11 +59,12 @@ btnSave.onclick = function () {
   tah = new TrashApiHelper(
     street.value,
     nr.value,
-    "https://karlsruhe-trash.azurewebsites.net/api/HttpTrigger?street={street}&nr={nr}"
+    `http://${api.value}?street={street}&nr={nr}`
   );
 
   street.setAttribute("disabled", true);
   nr.setAttribute("disabled", true);
+  api.setAttribute("disabled", true);
   ae.style.setProperty("display", "none");
 
   waitForData();
