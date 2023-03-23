@@ -183,7 +183,10 @@ function renderTimeline(byDate) {
         s.classList.remove("timeline-badge-clicked");
       });
 
-      var date = tah.date_from_string(event.children[0].innerText);
+     
+      var date = new Date(event.children[0].innerText.replace(/(\d{1,2}).(\d{1,2}).(\d{2})/, "20$3-$2-$1"));
+        //tah.date_from_string();
+
       event.children[0].children[0].classList.add("timeline-badge-clicked");
       cal.month = date.getMonth();
       cal.year = date.getFullYear();
