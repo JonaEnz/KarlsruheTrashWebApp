@@ -43,7 +43,7 @@ var tah = new TrashApiHelper(
   street,
   nr,
 //  "https://karlsruhe-trash.azurewebsites.net/api/HttpTrigger?street={street}&nr={nr}"
-`http://${apiPath}?street={street}&nr={nr}`
+`https://${apiPath}?street={street}&nr={nr}`
 );
 tryGetData();
 

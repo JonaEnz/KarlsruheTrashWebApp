@@ -59,7 +59,7 @@ btnSave.onclick = function () {
   tah = new TrashApiHelper(
     street.value,
     nr.value,
-    `http://${api.value}?street={street}&nr={nr}`
+    `https://${api.value}?street={street}&nr={nr}`
   );
 
   street.setAttribute("disabled", true);
